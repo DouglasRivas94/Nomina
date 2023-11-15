@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 using Nomina.Biblioteca;
 
 namespace Nomina
@@ -162,6 +163,66 @@ namespace Nomina
 
                 // Muestra un mensaje de advertencia
                 MessageBox.Show("Por favor, ingrese solo letras (A-Z).", "Caracteres no permitidos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            ExportListViewToExcel(lsvEmpleado, lsvEmpleador);
+        }
+
+        private void ExportListViewToExcel(ListView listView1, ListView listView2)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                ELVTWS(workbook, listView1, "DatosListView1");
+                ELVTWS(workbook, listView2, "DatosListView2");
+
+                // Guarda el archivo Excel
+                try
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.FileName = "Nomina";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        workbook.SaveAs(saveFileDialog.FileName);
+                        MessageBox.Show("Datos exportados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al exportar los datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ELVTWS(XLWorkbook workbook, ListView listView, string v)
+        {
+            var worksheet = workbook.Worksheets.Add(v);
+
+            int row = 1;
+            int col = 1;
+
+            // Encabezados de columna
+            foreach (ColumnHeader header in listView.Columns)
+            {
+                worksheet.Cell(row, col).Value = header.Text;
+                col++;
+            }
+
+            // Datos de las filas
+            row = 2;
+            foreach (ListViewItem item in listView.Items)
+            {
+                col = 1;
+                foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                {
+                    worksheet.Cell(row, col).Value = subItem.Text;
+                    col++;
+                }
+                row++;
             }
         }
     }

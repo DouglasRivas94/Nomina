@@ -79,6 +79,7 @@
             columnHeader17 = new ColumnHeader();
             columnHeader18 = new ColumnHeader();
             label1 = new Label();
+            btnGuardar = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -421,6 +422,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(btnGuardar);
             tabPage3.Controls.Add(btnGuard);
             tabPage3.Controls.Add(lsvEmpleador);
             tabPage3.Location = new Point(4, 24);
@@ -495,6 +497,16 @@
             label1.Size = new Size(127, 40);
             label1.TabIndex = 1;
             label1.Text = "Nomina";
+            // 
+            // btnGuardar
+            // 
+            btnGuardar.Location = new Point(662, 202);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(75, 23);
+            btnGuardar.TabIndex = 2;
+            btnGuardar.Text = "Guardar";
+            btnGuardar.UseVisualStyleBackColor = true;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // frmNomina
             // 
@@ -574,5 +586,6 @@
         private Button btnGuard;
         private Label label12;
         private MaskedTextBox mtxtCedula;
+        private Button btnGuardar;
     }
 }
