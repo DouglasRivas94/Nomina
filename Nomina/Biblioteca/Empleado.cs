@@ -1,4 +1,4 @@
-﻿namespace Nomina
+﻿namespace Nomina.Biblioteca
 {
     public class Empleado
     {

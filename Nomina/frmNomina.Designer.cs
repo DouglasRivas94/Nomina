@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNomina));
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             lblHora = new Label();
@@ -36,6 +37,8 @@
             label9 = new Label();
             btnAdd = new Button();
             groupBox1 = new GroupBox();
+            label12 = new Label();
+            mtxtCedula = new MaskedTextBox();
             txtBono = new TextBox();
             label11 = new Label();
             txtHorasE = new TextBox();
@@ -96,6 +99,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.BackColor = Color.Transparent;
             tabPage1.Controls.Add(lblHora);
             tabPage1.Controls.Add(lblFecha);
             tabPage1.Controls.Add(label10);
@@ -107,8 +111,7 @@
             tabPage1.Padding = new Padding(3);
             tabPage1.Size = new Size(800, 339);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Text = "Informacion";
             // 
             // lblHora
             // 
@@ -158,6 +161,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(mtxtCedula);
             groupBox1.Controls.Add(txtBono);
             groupBox1.Controls.Add(label11);
             groupBox1.Controls.Add(txtHorasE);
@@ -181,6 +186,23 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(289, 34);
+            label12.Name = "label12";
+            label12.Size = new Size(44, 15);
+            label12.TabIndex = 17;
+            label12.Text = "Cedula";
+            // 
+            // mtxtCedula
+            // 
+            mtxtCedula.Location = new Point(357, 25);
+            mtxtCedula.Mask = "000-000000-0000L";
+            mtxtCedula.Name = "mtxtCedula";
+            mtxtCedula.Size = new Size(123, 23);
+            mtxtCedula.TabIndex = 16;
+            // 
             // txtBono
             // 
             txtBono.Location = new Point(357, 131);
@@ -189,6 +211,7 @@
             txtBono.TabIndex = 15;
             txtBono.Tag = "0";
             txtBono.Text = "0";
+            txtBono.KeyPress += txtSalario_KeyPress;
             // 
             // label11
             // 
@@ -207,6 +230,7 @@
             txtHorasE.TabIndex = 13;
             txtHorasE.Tag = "0";
             txtHorasE.Text = "0";
+            txtHorasE.KeyPress += txtSalario_KeyPress;
             // 
             // txtDep
             // 
@@ -216,6 +240,7 @@
             txtDep.TabIndex = 12;
             txtDep.Tag = "0";
             txtDep.Text = "0";
+            txtDep.KeyPress += txtSalario_KeyPress;
             // 
             // label8
             // 
@@ -243,6 +268,7 @@
             txtViatico.TabIndex = 9;
             txtViatico.Tag = "0";
             txtViatico.Text = "0";
+            txtViatico.KeyPress += txtSalario_KeyPress;
             // 
             // txtSalario
             // 
@@ -250,6 +276,8 @@
             txtSalario.Name = "txtSalario";
             txtSalario.Size = new Size(100, 23);
             txtSalario.TabIndex = 8;
+            txtSalario.KeyPress += txtSalario_KeyPress;
+            txtSalario.Leave += txtSalario_Leave;
             // 
             // txtCargo
             // 
@@ -257,6 +285,7 @@
             txtCargo.Name = "txtCargo";
             txtCargo.Size = new Size(100, 23);
             txtCargo.TabIndex = 7;
+            txtCargo.KeyPress += txtNombre_KeyPress;
             // 
             // txtApellido
             // 
@@ -264,6 +293,7 @@
             txtApellido.Name = "txtApellido";
             txtApellido.Size = new Size(100, 23);
             txtApellido.TabIndex = 6;
+            txtApellido.KeyPress += txtNombre_KeyPress;
             // 
             // txtNombre
             // 
@@ -271,6 +301,7 @@
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(100, 23);
             txtNombre.TabIndex = 5;
+            txtNombre.KeyPress += txtNombre_KeyPress;
             // 
             // label6
             // 
@@ -325,12 +356,13 @@
             tabPage2.Padding = new Padding(3);
             tabPage2.Size = new Size(800, 339);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
+            tabPage2.Text = "Pago Empleado";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // lsvEmpleado
             // 
             lsvEmpleado.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader4, columnHeader5, columnHeader6, columnHeader7, columnHeader8, columnHeader9, columnHeader10, columnHeader11, columnHeader12 });
+            lsvEmpleado.GridLines = true;
             lsvEmpleado.Location = new Point(7, 8);
             lsvEmpleado.Name = "lsvEmpleado";
             lsvEmpleado.Size = new Size(787, 325);
@@ -396,7 +428,7 @@
             tabPage3.Padding = new Padding(3);
             tabPage3.Size = new Size(800, 339);
             tabPage3.TabIndex = 2;
-            tabPage3.Text = "tabPage3";
+            tabPage3.Text = "Pago Empleador";
             tabPage3.UseVisualStyleBackColor = true;
             // 
             // btnGuard
@@ -412,6 +444,7 @@
             // lsvEmpleador
             // 
             lsvEmpleador.Columns.AddRange(new ColumnHeader[] { columnHeader3, columnHeader13, columnHeader14, columnHeader15, columnHeader16, columnHeader17, columnHeader18 });
+            lsvEmpleador.GridLines = true;
             lsvEmpleador.Location = new Point(6, 6);
             lsvEmpleador.Name = "lsvEmpleador";
             lsvEmpleador.Size = new Size(606, 327);
@@ -467,10 +500,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Khaki;
             ClientSize = new Size(832, 438);
             Controls.Add(label1);
             Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             Name = "frmNomina";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmNomina";
             Load += frmNomina_Load;
             tabControl1.ResumeLayout(false);
@@ -535,5 +572,7 @@
         private ColumnHeader columnHeader17;
         private ColumnHeader columnHeader18;
         private Button btnGuard;
+        private Label label12;
+        private MaskedTextBox mtxtCedula;
     }
 }
